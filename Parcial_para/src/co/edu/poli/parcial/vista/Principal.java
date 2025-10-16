@@ -50,11 +50,11 @@ public class Principal {
         System.out.println("\n=== MENU DE OPERACIONES ===");
         System.out.println("1. Crear vehiculo");
         System.out.println("2. Listar todos los vehiculos");
-        System.out.println("3. Actualizar lista de vehiculos");
+        System.out.println("3. Modificar vehiculos");
         System.out.println("4. Eliminar un vehiculo");
-        System.out.println("5. Leer todos los vehiculos");
+        System.out.println("5. Listar vehiculo especifico");
         System.out.println("6. Guardar en aplicacion");
-        System.out.println("7. Cargar a archivo");
+        System.out.println("7. Cargar archivo");
         System.out.println("8. Salir");
         System.out.print("Seleccione una opcion: ");
     }
@@ -110,8 +110,8 @@ public class Principal {
     }
     
     private static void actualizarVehiculo() {
-        System.out.println("\n=== ACTUALIZAR VEHICULO ===");
-        System.out.print("Ingrese la placa del vehiculo a actualizar: ");
+        System.out.println("\n=== MODIFICAR VEHICULO ===");
+        System.out.print("Ingrese la placa del vehiculo a modificar: ");
         String placa = scanner.nextLine();
         
         Vehiculo vehiculoExistente = operaciones.leer(placa);
@@ -181,7 +181,7 @@ public class Principal {
     }
     
     private static void deserializarDatos() {
-        System.out.println("\n=== LEER ARCHIVO ===");
+        System.out.println("\n=== CARGAR ARCHIVO ===");
         if (operaciones.deserializar()) {
             System.out.println("Datos cargados exitosamente");
         } else {

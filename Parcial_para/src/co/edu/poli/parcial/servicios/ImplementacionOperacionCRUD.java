@@ -1,10 +1,12 @@
 package co.edu.poli.parcial.servicios;
 
 import co.edu.poli.parcial.modelo.Vehiculo;
+import java.io.*;
 
 public class ImplementacionOperacionCRUD implements OperacionCRUD {
     private Vehiculo[] almacenamiento;
     private int cantidad;
+    private static final String ARCHIVO = "vehiculos.dat";
     
     public ImplementacionOperacionCRUD() {
         this.almacenamiento = new Vehiculo[100];
@@ -13,12 +15,22 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
     
     @Override
     public boolean crear(Vehiculo vehiculo) {
-        if (cantidad < almacenamiento.length) {
-            almacenamiento[cantidad] = vehiculo;
-            cantidad++;
-            return true;
+        if (cantidad >= almacenamiento.length) {
+            System.out.println("No hay espacio disponible");
+            return false;
         }
-        return false;
+        
+        // Verificar si ya existe la placa
+        for (int i = 0; i < cantidad; i++) {
+            if (almacenamiento[i].getPlaca().equals(vehiculo.getPlaca())) {
+                System.out.println("Ya existe un vehículo con esta placa");
+                return false;
+            }
+        }
+        
+        almacenamiento[cantidad] = vehiculo;
+        cantidad++;
+        return true;
     }
     
     @Override
@@ -57,6 +69,7 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return null;
     }
     
+    @Override
     public Vehiculo[] leerTodos() {
         Vehiculo[] resultado = new Vehiculo[cantidad];
         for (int i = 0; i < cantidad; i++) {
@@ -65,37 +78,48 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return resultado;
     }
     
+    @Override
     public boolean serializar() {
-        try {
-            java.io.FileOutputStream fileOut = new java.io.FileOutputStream("vehiculos.dat");
-            java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(fileOut);
-            out.writeInt(cantidad);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
+            // Primero guardamos la cantidad
+            oos.writeInt(cantidad);
+            // Luego guardamos cada vehículo
             for (int i = 0; i < cantidad; i++) {
-                out.writeObject(almacenamiento[i]);
+                oos.writeObject(almacenamiento[i]);
             }
-            out.close();
-            fileOut.close();
+            System.out.println("Datos serializados correctamente. Vehículos guardados: " + cantidad);
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Error al serializar: " + e.getMessage());
             return false;
         }
     }
     
+    @Override
     public boolean deserializar() {
-        try {
-            java.io.FileInputStream fileIn = new java.io.FileInputStream("vehiculos.dat");
-            java.io.ObjectInputStream in = new java.io.ObjectInputStream(fileIn);
-            cantidad = in.readInt();
-            for (int i = 0; i < cantidad; i++) {
-                almacenamiento[i] = (Vehiculo) in.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+            // Primero leemos la cantidad
+            int cantGuardada = ois.readInt();
+            // Luego leemos cada vehículo
+            for (int i = 0; i < cantGuardada; i++) {
+                if (i < almacenamiento.length) {
+                    almacenamiento[i] = (Vehiculo) ois.readObject();
+                }
             }
-            in.close();
-            fileIn.close();
+            cantidad = Math.min(cantGuardada, almacenamiento.length);
+            System.out.println("Datos deserializados correctamente. Vehículos cargados: " + cantidad);
             return true;
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no encontrado. Se iniciará con datos vacíos.");
+            return false;
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al deserializar: " + e.getMessage());
             return false;
         }
+    }
+    
+    // Método para obtener la cantidad actual (útil para debug)
+    public int getCantidad() {
+        return cantidad;
     }
 }

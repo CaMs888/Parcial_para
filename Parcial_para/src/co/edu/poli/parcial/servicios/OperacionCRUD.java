@@ -7,4 +7,7 @@ public interface OperacionCRUD {
     boolean eliminar(String placa);
     boolean actualizar(Vehiculo vehiculo);
     Vehiculo leer(String placa);
+    Vehiculo[] leerTodos(); 
+    boolean serializar();   
+    boolean deserializar(); 
 }
