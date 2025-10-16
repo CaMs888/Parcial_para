@@ -55,7 +55,7 @@ public class Principal {
         System.out.println("5. Leer todos los vehiculos");
         System.out.println("6. Guardar en aplicacion");
         System.out.println("7. Cargar a archivo");
-        System.out.println("8. Salir de la aplicacion");
+        System.out.println("8. Salir");
         System.out.print("Seleccione una opcion: ");
     }
     
