@@ -13,7 +13,7 @@ import co.edu.poli.parcial.servicios.*;
 public class Principal {
     private static ImplementacionOperacionCRUD operaciones = new ImplementacionOperacionCRUD();
     private static java.util.Scanner scanner = new java.util.Scanner(System.in);
-    private static Conductor conductorPredefinido = new Conductor("C001", "Juan Perez", "B2");
+    private static Conductor conductorPredefinido = new Conductor("C0001", "Juan Perez", "B2");
     
     /**
      * Método principal que inicia la aplicación y muestra el menú de opciones.
