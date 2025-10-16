@@ -3,11 +3,23 @@ package co.edu.poli.parcial.vista;
 import co.edu.poli.parcial.modelo.*;
 import co.edu.poli.parcial.servicios.*;
 
+/**
+ * Clase principal que contiene el método main y gestiona la interfaz de usuario
+ * para el sistema de gestión de vehículos.
+ * 
+ * @author Sarah Chaves
+ * @version 1.0
+ */
 public class Principal {
     private static ImplementacionOperacionCRUD operaciones = new ImplementacionOperacionCRUD();
     private static java.util.Scanner scanner = new java.util.Scanner(System.in);
     private static Conductor conductorPredefinido = new Conductor("C001", "Juan Perez", "B2");
     
+    /**
+     * Método principal que inicia la aplicación y muestra el menú de opciones.
+     * 
+     * @param args Argumentos de línea de comandos (no utilizados)
+     */
     public static void main(String[] args) {
         int opcion;
         do {
@@ -46,6 +58,9 @@ public class Principal {
         } while (opcion != 8);
     }
     
+    /**
+     * Muestra el menú principal de opciones al usuario.
+     */
     private static void mostrarMenu() {
         System.out.println("\n=== MENU DE OPERACIONES ===");
         System.out.println("1. Crear vehiculo");
@@ -59,6 +74,9 @@ public class Principal {
         System.out.print("Seleccione una opcion: ");
     }
     
+    /**
+     * Crea un nuevo vehículo (Bus o Camión) solicitando los datos al usuario.
+     */
     private static void crearVehiculo() {
         System.out.println("\n=== CREAR VEHICULO ===");
         System.out.println("1. Bus");
@@ -97,6 +115,9 @@ public class Principal {
         }
     }
     
+    /**
+     * Lista todos los vehículos registrados en el sistema.
+     */
     private static void listarVehiculos() {
         System.out.println("\n=== LISTAR TODOS LOS VEHICULOS ===");
         Vehiculo[] vehiculos = operaciones.leerTodos();
@@ -109,6 +130,9 @@ public class Principal {
         }
     }
     
+    /**
+     * Actualiza los datos de un vehículo existente identificado por su placa.
+     */
     private static void actualizarVehiculo() {
         System.out.println("\n=== MODIFICAR VEHICULO ===");
         System.out.print("Ingrese la placa del vehiculo a modificar: ");
@@ -146,6 +170,9 @@ public class Principal {
         }
     }
     
+    /**
+     * Elimina un vehículo del sistema identificado por su placa.
+     */
     private static void eliminarVehiculo() {
         System.out.println("\n=== ELIMINAR VEHICULO ===");
         System.out.print("Ingrese la placa del vehiculo a eliminar: ");
@@ -158,6 +185,9 @@ public class Principal {
         }
     }
     
+    /**
+     * Busca y muestra la información de un vehículo específico por su placa.
+     */
     private static void leerVehiculo() {
         System.out.println("\n=== LEER VEHICULO ESPECIFICO ===");
         System.out.print("Ingrese la placa del vehiculo: ");
@@ -171,6 +201,9 @@ public class Principal {
         }
     }
     
+    /**
+     * Serializa los datos de los vehículos guardándolos en un archivo.
+     */
     private static void serializarDatos() {
         System.out.println("\n=== GUARDAR EN ARCHIVO ===");
         if (operaciones.serializar()) {
@@ -180,6 +213,9 @@ public class Principal {
         }
     }
     
+    /**
+     * Deserializa los datos de los vehículos cargándolos desde un archivo.
+     */
     private static void deserializarDatos() {
         System.out.println("\n=== CARGAR ARCHIVO ===");
         if (operaciones.deserializar()) {

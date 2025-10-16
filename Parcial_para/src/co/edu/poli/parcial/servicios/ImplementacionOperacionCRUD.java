@@ -3,16 +3,29 @@ package co.edu.poli.parcial.servicios;
 import co.edu.poli.parcial.modelo.Vehiculo;
 import java.io.*;
 
+/**
+ * Implementación concreta de las operaciones CRUD para vehículos.
+ * Utiliza un array estático para el almacenamiento en memoria.
+ * 
+ * @author Sarah Chaves
+ * @version 1.0
+ */
 public class ImplementacionOperacionCRUD implements OperacionCRUD {
     private Vehiculo[] almacenamiento;
     private int cantidad;
     private static final String ARCHIVO = "vehiculos.dat";
     
+    /**
+     * Constructor que inicializa el almacenamiento con capacidad para 100 vehículos.
+     */
     public ImplementacionOperacionCRUD() {
         this.almacenamiento = new Vehiculo[100];
         this.cantidad = 0;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean crear(Vehiculo vehiculo) {
         if (cantidad >= almacenamiento.length) {
@@ -33,6 +46,9 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return true;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean eliminar(String placa) {
         for (int i = 0; i < cantidad; i++) {
@@ -48,6 +64,9 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return false;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean actualizar(Vehiculo vehiculo) {
         for (int i = 0; i < cantidad; i++) {
@@ -59,6 +78,9 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return false;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vehiculo leer(String placa) {
         for (int i = 0; i < cantidad; i++) {
@@ -69,6 +91,9 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return null;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vehiculo[] leerTodos() {
         Vehiculo[] resultado = new Vehiculo[cantidad];
@@ -78,6 +103,9 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         return resultado;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean serializar() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO))) {
@@ -95,6 +123,9 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         }
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean deserializar() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
@@ -118,7 +149,11 @@ public class ImplementacionOperacionCRUD implements OperacionCRUD {
         }
     }
     
-    // Método para obtener la cantidad actual (útil para debug)
+    /**
+     * Obtiene la cantidad actual de vehículos almacenados.
+     * 
+     * @return Número de vehículos almacenados
+     */
     public int getCantidad() {
         return cantidad;
     }
