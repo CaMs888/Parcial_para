@@ -53,7 +53,7 @@ public class Principal {
         System.out.println("3. Modificar vehiculos");
         System.out.println("4. Eliminar un vehiculo");
         System.out.println("5. Listar vehiculo especifico");
-        System.out.println("6. Guardar en aplicacion");
+        System.out.println("6. Guardar en archivo");
         System.out.println("7. Cargar archivo");
         System.out.println("8. Salir");
         System.out.print("Seleccione una opcion: ");
